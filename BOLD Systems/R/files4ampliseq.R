@@ -71,10 +71,10 @@ parser <- OptionParser() |>
 arguments <- parse_args(parser)
 
 # Validate -------------------------------------------------------------
-if (is.null(opt$fasta) || is.null(opt$tax)) {
-  print_help(opt_parser)
+if (is.null(arguments$fasta) || is.null(arguments$tax)) {
+  print_help(parser)
   stop("\nError: both --fasta and --tax are required.\n", call. = FALSE)
 }
 
 # Run ------------------------------------------------------------------
-add_taxonomy_headers(opt$fasta, opt$tax, opt$output_dir)
+add_taxonomy_headers(arguments$fasta, arguments$tax, arguments$output_dir)

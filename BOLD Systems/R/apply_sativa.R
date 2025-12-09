@@ -29,16 +29,16 @@ parser <- OptionParser() |>
 arguments <- parse_args(parser)
 
 # validate ---------------------------------------------------------------------
-if (is.null(opt$tax) || is.null(opt$mis)) {
-  print_help(opt_parser)
+if (is.null(arguments$tax) || is.null(arguments$mis)) {
+  print_help(parser)
   stop("\nError: You must specify both --tax and --mis files.\n", call. = FALSE)
 }
 
 # default output name ---------------------------
-if (is.null(opt$output)) {
-  base <- sub("\\.tax$", "", basename(opt$tax))
-  opt$output <- paste0(base, "_corrected.tax")
+if (is.null(arguments$output)) {
+  base <- sub("\\.tax$", "", basename(arguments$tax))
+  arguments$output <- paste0(base, "_corrected.tax")
 }
 
 # run -----------------------------------------
-correct_taxonomy(opt$tax, opt$mis, opt$output)
+correct_taxonomy(arguments$tax, arguments$mis, arguments$output)
