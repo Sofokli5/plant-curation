@@ -30,16 +30,30 @@ concatITS <- function(its1, s58, its2) {
   return(concat)
 }
 
-its1 <- "test/250902.ITS1.fasta"
-s58 <- "test/250902.5_8S.fasta"
-its2 <- "test/250902.ITS2.fasta"
+# optparse -------------------------------------------------------------
+parser <- OptionParser() |>
+  add_option(c("--its1"), type = "character", help = "ITS1 FASTA file [required]")|>
+  add_option(c("--s58"), type = "character", help = "5.8S FASTA file [required]")|>
+  add_option(c("--its2"), type = "character", help = "ITS2 FASTA file [required]")|>
+  add_option(c("-o", "--output_dir"), type = "character", default = ".",
+              help = "Output directory [default: current directory]")|>
+  add_option(c("-p", "--prefix"), type = "character", default = "concat",
+              help = "Output file prefix [default: concat]")
 
-outdir <- its1 |> dirname()
-db <- its1 |>
-  basename() |>
-  str_split_i("\\.", 1)
 
-full_its <- concatITS(its1, s58, its2)
+arguments <- parse_args(parser)
+
+#validation---------------------------------------------------------------------
+if (is.null(opt$its1) || is.null(opt$s58) || is.null(opt$its2)) {
+  print_help(opt_parser)
+  stop("\nError: You must specify --its1, --s58, and --its2.\n", call. = FALSE)
+}
+
+#run--------------------------------------------------------------------
+full_its <- concatITS(opt$its1, opt$s58, opt$its2)
+
+out_file <- file.path(opt$output_dir, paste0(opt$prefix, ".ITS.fasta"))
+dir.create(opt$output_dir, showWarnings = FALSE)
 
 write.fasta(
   full_its, names(full_its) |> as.list(),

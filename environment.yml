@@ -4,6 +4,7 @@ channels:
 - defaults
 - bioconda
 dependencies:
+- git
 - r-base
 - r-optparse
 - r-data.table
