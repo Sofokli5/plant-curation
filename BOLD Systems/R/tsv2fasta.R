@@ -27,8 +27,8 @@ tsv2fasta <- function(input_sequences_table, output_dir) {
   its0[, tax_col := paste(kingdom, phylum, class, order, family, genus, species, sep = ";")]
   trnl[, tax_col := paste(kingdom, phylum, class, order, family, genus, species, sep = ";")]
   
-  #its0 <- its0[, by = .(tax_col, nuc), head(.SD, 1)]
-  #trnl <- trnl[, by = .(tax_col, nuc), head(.SD, 1)]
+  its0 <- its0[, by = .(tax_col, nuc), head(.SD, 1)]
+  trnl <- trnl[, by = .(tax_col, nuc), head(.SD, 1)]
   
   #its0[, fasta_col := paste0(record_id, "_", tax_col)]
   #trnl[, fasta_col := paste0(record_id, "_", tax_col)]
@@ -43,8 +43,8 @@ tsv2fasta <- function(input_sequences_table, output_dir) {
   #R.utils::gzip(paste0(output_dir, "/ITS0.fasta"))
   #R.utils::gzip(paste0(output_dir, "/trnL.fasta"))
 
-  its0_tax <- its0[, .(processid, tax_col)]
-  trnl_tax <- trnl[, .(processid, tax_col)]
+  its0_tax <- its0[, .(record_id, tax_col)]
+  trnl_tax <- trnl[, .(record_id, tax_col)]
 
   fwrite(its0_tax, paste0(output_dir, "/ITS0.tax"), sep = "\t", row.names = FALSE, col.names = F, quote = FALSE)
   fwrite(trnl_tax, paste0(output_dir, "/trnL.tax"), sep = "\t", row.names = FALSE, col.names = F, quote = FALSE)

@@ -8,7 +8,7 @@ filter_tax <- function(input_fasta, input_tax, out_tax, out_dir){
   
   fasta <- read.fasta(input_fasta)
   
-  ids <- sub("\\..*", "", names(fasta))
+  ids <- sub("\\|.*", "", names(fasta))
   
   tax <- fread(input_tax, sep="\t", header=FALSE)
   

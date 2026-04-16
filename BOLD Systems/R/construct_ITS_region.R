@@ -50,12 +50,11 @@ if (is.null(arguments$its1) || is.null(arguments$s58) || is.null(arguments$its2)
   print_help(parser)
   stop("\nError: You must specify --its1, --s58, and --its2.\n", call. = FALSE)
 }
-
+if (arguments$output_dir != "r-curation") {
+  dir.create(arguments$output_dir, showWarnings = FALSE)
+}
 #run--------------------------------------------------------------------
 full_its <- concatITS(arguments$its1, arguments$s58, arguments$its2)
 
-out_file <- file.path(opt$output_dir, paste0(opt$prefix, ".ITS.fasta"))
-dir.create(arguments$output_dir, showWarnings = FALSE)
-
-write.fasta(full_its, names(full_its) |> as.list(), nbchar = 120, file.out = paste0(arguments$output_dir, arguments$prefix, "/ITS.fasta"))
+write.fasta(full_its, names(full_its) |> as.list(), nbchar = 120, file.out = paste0(arguments$output_dir, "/", arguments$prefix, ".ITS.fasta"))
 

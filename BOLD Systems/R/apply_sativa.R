@@ -1,4 +1,5 @@
 library(data.table)
+library(optparse)
 
 correct_taxonomy <- function(tax_file, mis_file, out_file){
   tax <- fread(tax_file, header = F, sep = "\t")
